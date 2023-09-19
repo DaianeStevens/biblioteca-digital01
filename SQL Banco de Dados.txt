@@ -1,0 +1,115 @@
+/*Criando tabela Usuario*/
+CREATE TABLE `usuario` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nome` varchar(250) NOT NULL,
+  `senha` varchar(45) NOT NULL,
+  `telefone` varchar(20) DEFAULT NULL,
+  `endereco` varchar(250) DEFAULT NULL,
+  `bairro` varchar(45) DEFAULT NULL,
+  `cidade` varchar(45) DEFAULT NULL,
+  `UF` char(2) DEFAULT NULL,
+  `cpf` varchar(20) NOT NULL,
+  `ativo` bool default true,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  UNIQUE KEY `cpf_UNIQUE` (`cpf`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+
+
+/*Insert usuario*/
+insert into usuario (nome, senha, telefone, endereco, bairro, cidade, UF, cpf, ativo) values ('Dionatan Filho Oliveira', '9z<?XC#~', '88992567762', 'Avenida Tocantins', 'Vila Jardim Rio Claro', 'Jataí', 'GO', '12584088720', true);
+insert into usuario (nome, senha, telefone, endereco, bairro, cidade, UF, cpf, ativo) values ('Marcos Silva', '[E9u=Z42', '55971968338', 'Rua Paracatu', 'Parque Imperial', 'São Paulo', 'SP', '417.728.258-83', true);
+insert into usuario (nome, senha, telefone, endereco, bairro, cidade, UF, cpf, ativo) values ('Maria Fernandes Santos', '8>RT=pT1', '69981765172', 'Rua Arlindo Nogueira', 'Centro', 'Teresina', 'PI', '78592791936', true);
+insert into usuario (nome, senha, telefone, endereco, bairro, cidade, UF, cpf, ativo) values ('Pedro Roque', '42)Q1]Lf', '84979112807', 'Rua Domingos Olímpio', 'Centro', 'Sobral', 'CE', '71452563209', true);
+insert into usuario (nome, senha, telefone, endereco, bairro, cidade, UF, cpf, ativo) values ('Ana Queiroz', '7~T^Dp-~', '68971130829', 'Rua da Imprensa', 'Monte Castelo', 'Campo Grande', 'MS', '37305687600', true);
+insert into usuario (nome, senha, telefone, endereco, bairro, cidade, UF, cpf, ativo) values ('Alberto Alvez Pereira', '5;|YZE[2', '82985140362', 'Avenida Afonso Pena', 'Boa Viagem', 'Belo Horizonte', 'MG', '25368581629', true);
+insert into usuario (nome, senha, telefone, endereco, bairro, cidade, UF, cpf, ativo) values ('Fernanda Marques', '57O4eZO]', '83969528000', 'Rua Carlos Augusto Cornelsen', 'Bom Retiro', 'Curitiba', 'PR', '11160426309', true);
+insert into usuario (nome, senha, telefone, endereco, bairro, cidade, UF, cpf, ativo) values ('Luis Felipe Almeida', '9GiR$d.+', '49992139853', 'Travessa da CDL', 'Centro', 'Ji-Paraná', 'RO', '42738439519', true);
+insert into usuario (nome, senha, telefone, endereco, bairro, cidade, UF, cpf, ativo) values ('Dionatan Filho Oliveira', '9z<?XC#~', '88992567762', 'Avenida Tocantins', 'Vila Jardim Rio Claro', 'Jataí', 'GO', '12584088720', true);
+insert into usuario (nome, senha, telefone, endereco, bairro, cidade, UF, cpf, ativo) values ('Laura Quadros', '0WW\\km:', '21987523556', 'Travessa Antônio Ferreira', 'Igrejinha', 'Capanema', 'PA', '95463999490', true);
+
+
+
+/*Criando tabela Livro*/
+
+CREATE TABLE `livro` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `titulo` varchar(50) DEFAULT NULL,
+  `autor` varchar(50) DEFAULT NULL,
+  `status` char(1) DEFAULT NULL,
+  `qtd_exemplar` int DEFAULT NULL,
+  `dt_inclusao` date DEFAULT NULL,
+  `dt_baixa` date DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+
+/*Insert da tabela*/
+
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('O ladrão de raios', 'Rick Riordan', 'A',15, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('Jogos Vorazes', 'Suzanne Collins', 'A',10, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('Divergente', ' Veronica Roth', 'A',11, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('Maze Runner: correr ou morrer', ' James Dashner', 'A',15, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('A culpa é das estrelas', 'John Green', 'A',20, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('Cidades de papel', 'John Green', 'A',25, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('É assim que começa', ' Colleen Hoover', 'A',8, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('O despertar: Legado do coração de dragão', 'Nora Roberts', 'A',6, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('O Homem de Giz', 'C. J. Tudor', 'A',13, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('Caixa de pássaros: Não abra os olhos: 1 ', 'Josh Malerman', 'A',16, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('O vilarejo ', ' Raphael Montes', 'A',19, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('A grande caçada: Série a roda do tempo vol. 2', 'Robert Jordan', 'A',3, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('O Conde de Monte Cristo', ' Alexandre Dumas', 'A',2, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('Eu sou Malala', ' Walter Isaacson', 'A',25, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('Elon Musk', ' Walter Isaacson', 'A',11, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('Steve Jobs', ' Walter Isaacson', 'A',16, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('Em busca de mim', 'Viola Davis', 'A',18, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('Toda poesia', 'Paulo Leminski', 'A',5, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('A bruxa não vai para a fogueira neste livro', ' Amanda Lovelace', 'A',4, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('A Guerra dos Tronos : As Crônicas de Gelo e Fogo', 'George R. R. Martin', 'A',25, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('A Sociedade do Anel', 'J. R. R. Tolkien', 'A',3, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('O Hobbit', 'J. R. R. Tolkien', 'A',5, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('I, Robot', ' Isaac Asimov', 'A',2, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('A guerra dos mundos', 'H.G. Wells', 'A',15, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('Pai Rico, Pai Pobre', ' Robert T. Kiyosaki ', 'A',9, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('O homem mais rico da Babilônia', 'George S Clason', 'A',21, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('Os segredos da mente milionária', 'T. Harv Eker', 'A',25, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('A psicologia financeira', 'Morgan Housel', 'A',11, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('Mindset: A nova psicologia do sucesso', 'Carol S. Dweck', 'A',35, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('O poder do hábito', ' Charles Duhigg', 'A',26, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('Essencialismo: A disciplinada busca por menos', ' Greg McKeown', 'A',24, '2023-09-15', null );
+
+
+
+/*Criando tabela locacao*/
+
+CREATE TABLE `locacao` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_usuario` int NOT NULL,
+  `dt_prazo_devolucao` date NOT NULL,
+  `dt_locacao` date NOT NULL,
+  `dt_devolucao` date NOT NULL,
+
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  KEY `id_usuario_idx` (`id_usuario`),
+  CONSTRAINT `id_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+----------------------------------------------------
+
+/*Criando Tabela locacao_livro*/
+
+CREATE TABLE `locacao_livro` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `id_locacao` int NOT NULL,
+  `id_livro` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_locacao_idx` (`id_locacao`),
+  KEY `id_livro_idx` (`id_livro`),
+  CONSTRAINT `id_livro` FOREIGN KEY (`id_livro`) REFERENCES `livro` (`id`),
+  CONSTRAINT `id_locacao` FOREIGN KEY (`id_locacao`) REFERENCES `locacao` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+--------------------------------------------
+
