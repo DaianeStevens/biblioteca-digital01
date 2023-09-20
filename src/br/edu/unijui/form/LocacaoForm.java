@@ -4,28 +4,69 @@
  */
 package br.edu.unijui.form;
 
+import br.edu.unijui.model.Livro;
 import br.edu.unijui.model.Locacao;
 import br.edu.unijui.model.Usuario;
+import br.edu.unijui.model.dao.LivroImpl;
 import br.edu.unijui.model.dao.LocacaoImpl;
 import br.edu.unijui.model.dao.UsuarioImpl;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 /**
  *
  * @author chayk
  */
 public class LocacaoForm extends javax.swing.JFrame {
+
     Locacao locacao = new Locacao();
     DefaultTableModel model;
+    DefaultTableModel modelLivros;
+    DefaultTableModel modelLivrosAdicionados;
+    ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
+
     /**
      * Creates new form LocacaoForm
      */
     public LocacaoForm() {
         initComponents();
+
+        btnEditar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+        btnSalvar.setEnabled(false);
+
+        locacoesTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) {
+                    int selectedRow = locacoesTable.getSelectedRow();
+                    if (selectedRow >= 0) {
+
+                        btnEditar.setEnabled(true);
+                        btnExcluir.setEnabled(true);
+                        // Aqui você pode acessar os dados da linha selecionada
+                        Object codigo = locacoesTable.getValueAt(selectedRow, 0);
+                        Object codigoUsuario = locacoesTable.getValueAt(selectedRow, 1);
+                        Object dataLocacao = locacoesTable.getValueAt(selectedRow, 2);
+                        Object dataPrazoDevolucao = locacoesTable.getValueAt(selectedRow, 3);
+                        Object dataDevolucao = locacoesTable.getValueAt(selectedRow, 4);
+
+                        // Faça o que desejar com os dados da linha selecionada
+                        System.out.println("Linha selecionada: " + codigo + ", " + codigoUsuario + ", " + dataLocacao + ", " + dataPrazoDevolucao + ", " + dataDevolucao);
+                    } else {
+                        btnEditar.setEnabled(false);
+                        btnExcluir.setEnabled(false);
+                        btnSalvar.setEnabled(false);
+                    }
+                }
+            }
+        });
     }
 
     /**
@@ -40,6 +81,22 @@ public class LocacaoForm extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         locacoesTable = new javax.swing.JTable();
+        btnCadastrar = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
+        btnExcluir = new javax.swing.JButton();
+        btnSalvar = new javax.swing.JButton();
+        selectUsuario = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        btnAdicionaLivro = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        livrosAdicionadosTable = new javax.swing.JTable();
+        jLabel4 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        livrosTable = new javax.swing.JTable();
+        inputFiltroLivro = new javax.swing.JTextField();
+        btnFiltroLivro = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -85,28 +142,206 @@ public class LocacaoForm extends javax.swing.JFrame {
             locacoesTable.getColumnModel().getColumn(1).setMaxWidth(150);
         }
 
+        btnCadastrar.setText("Cadastrar");
+        btnCadastrar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCadastrarMouseClicked(evt);
+            }
+        });
+
+        btnEditar.setText("Editar");
+
+        btnExcluir.setText("Excluir");
+
+        btnSalvar.setBackground(new java.awt.Color(0, 204, 51));
+        btnSalvar.setForeground(new java.awt.Color(255, 255, 255));
+        btnSalvar.setText("Salvar");
+
+        selectUsuario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        selectUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selectUsuarioActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Usuário:");
+
+        jLabel3.setText("Livros:");
+
+        btnAdicionaLivro.setBackground(new java.awt.Color(51, 153, 255));
+        btnAdicionaLivro.setForeground(new java.awt.Color(255, 255, 255));
+        btnAdicionaLivro.setText("Adicionar");
+        btnAdicionaLivro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAdicionaLivroMouseClicked(evt);
+            }
+        });
+        btnAdicionaLivro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdicionaLivroActionPerformed(evt);
+            }
+        });
+
+        livrosAdicionadosTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Código", "Título"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(livrosAdicionadosTable);
+        if (livrosAdicionadosTable.getColumnModel().getColumnCount() > 0) {
+            livrosAdicionadosTable.getColumnModel().getColumn(0).setMinWidth(50);
+            livrosAdicionadosTable.getColumnModel().getColumn(0).setMaxWidth(100);
+        }
+
+        jLabel4.setText("Livros adicionados:");
+
+        livrosTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Código", "Título", "Autor"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(livrosTable);
+        if (livrosTable.getColumnModel().getColumnCount() > 0) {
+            livrosTable.getColumnModel().getColumn(0).setMinWidth(50);
+            livrosTable.getColumnModel().getColumn(0).setMaxWidth(100);
+        }
+
+        inputFiltroLivro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inputFiltroLivroActionPerformed(evt);
+            }
+        });
+
+        btnFiltroLivro.setText("Buscar");
+        btnFiltroLivro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnFiltroLivroMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(179, 179, 179)
+                        .addGap(151, 151, 151)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(28, 28, 28)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 552, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(32, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(selectUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 693, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(btnCadastrar)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(btnEditar)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(btnExcluir))
+                                .addComponent(jScrollPane1)
+                                .addComponent(jSeparator1)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGroup(layout.createSequentialGroup()
+                                                    .addComponent(inputFiltroLivro, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addComponent(btnFiltroLivro)))
+                                            .addGap(0, 1, Short.MAX_VALUE))
+                                        .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGap(0, 0, Short.MAX_VALUE)
+                                            .addComponent(btnAdicionaLivro, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGap(18, 18, 18)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(btnSalvar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(37, 37, 37))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                .addGap(25, 25, 25)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(selectUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(inputFiltroLivro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnFiltroLivro))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(15, 15, 15)
+                        .addComponent(btnAdicionaLivro))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btnSalvar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCadastrar)
+                    .addComponent(btnEditar)
+                    .addComponent(btnExcluir))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23))
+                .addGap(21, 21, 21))
         );
 
         pack();
@@ -114,9 +349,25 @@ public class LocacaoForm extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         try {
+            this.modelLivrosAdicionados = (DefaultTableModel) livrosAdicionadosTable.getModel();
+        modelLivrosAdicionados.setRowCount(0);
+            //Popula Table Locacoes
             this.model = (DefaultTableModel) locacoesTable.getModel();
             LocacaoImpl locacaoImpl = new LocacaoImpl();
-            PopulateTableUsuarios(locacaoImpl.getLocacaoes());
+            PopulateTableLocacoes(locacaoImpl.getLocacaoes());
+
+            //Popula Table Livros
+            this.modelLivros = (DefaultTableModel) livrosTable.getModel();
+            LivroImpl livroImpl = new LivroImpl();
+            PopulateTableLivros(livroImpl.getLivrosFiltro(null));
+
+            //Popula select de usuários
+            UsuarioImpl usuarioImpl = new UsuarioImpl();
+            usuarios = usuarioImpl.getUsuariosFiltro(null);
+            selectUsuario.removeAllItems();
+            for (Usuario item : usuarios) {
+                selectUsuario.addItem(item.getNome());
+            }
 
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(LivroForm.class.getName()).log(Level.SEVERE, null, ex);
@@ -124,6 +375,55 @@ public class LocacaoForm extends javax.swing.JFrame {
             Logger.getLogger(LivroForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_formWindowOpened
+
+    private void btnCadastrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCadastrarMouseClicked
+        btnEditar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+        btnSalvar.setEnabled(true);
+        locacoesTable.clearSelection();
+    }//GEN-LAST:event_btnCadastrarMouseClicked
+
+    private void selectUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectUsuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_selectUsuarioActionPerformed
+
+    private void btnAdicionaLivroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionaLivroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAdicionaLivroActionPerformed
+
+    private void inputFiltroLivroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputFiltroLivroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_inputFiltroLivroActionPerformed
+
+    private void btnFiltroLivroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFiltroLivroMouseClicked
+        try {
+            String filtro = inputFiltroLivro.getText();
+            LivroImpl livroImpl = new LivroImpl();
+            PopulateTableLivros(livroImpl.getLivrosFiltro(filtro));
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(LivroForm.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(LivroForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_btnFiltroLivroMouseClicked
+
+    private void btnAdicionaLivroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdicionaLivroMouseClicked
+
+        int selectedRow = livrosTable.getSelectedRow();
+        if (selectedRow >= 0) {
+            // Aqui você pode acessar os dados da linha selecionada
+           Livro livroAdicionado= new Livro();
+            livroAdicionado.setId((Integer)livrosTable.getValueAt(selectedRow, 0));
+            livroAdicionado.setTitulo((String)livrosTable.getValueAt(selectedRow, 1));
+            PopulateTableLivrosAdicionados(livroAdicionado);
+            // Faça o que desejar com os dados da linha selecionada
+            //System.out.println("Linha selecionada: " + codigo + ", " + titulo);
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um livro na tabela acima!");
+        }
+
+    }//GEN-LAST:event_btnAdicionaLivroMouseClicked
 
     /**
      * @param args the command line arguments
@@ -159,8 +459,8 @@ public class LocacaoForm extends javax.swing.JFrame {
             }
         });
     }
-    
-     private void PopulateTableUsuarios(ArrayList<Locacao> locacoes) {
+
+    private void PopulateTableLocacoes(ArrayList<Locacao> locacoes) {
         model.setRowCount(0);
         for (Locacao obj : locacoes) {
             Object rowData[] = new Object[5];
@@ -173,9 +473,43 @@ public class LocacaoForm extends javax.swing.JFrame {
         }
     }
 
+    private void PopulateTableLivros(ArrayList<Livro> livros) {
+        modelLivros.setRowCount(0);
+        for (Livro obj : livros) {
+            Object rowData[] = new Object[3];
+            rowData[0] = obj.getId();
+            rowData[1] = obj.getTitulo();
+            rowData[2] = obj.getAutor();
+            modelLivros.addRow(rowData);
+        }
+    }
+
+    private void PopulateTableLivrosAdicionados(Livro livro) {
+        Object rowData[] = new Object[2];
+        rowData[0] = livro.getId();
+        rowData[1] = livro.getTitulo();
+        modelLivrosAdicionados.addRow(rowData);
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAdicionaLivro;
+    private javax.swing.JButton btnCadastrar;
+    private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnFiltroLivro;
+    private javax.swing.JButton btnSalvar;
+    private javax.swing.JTextField inputFiltroLivro;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTable livrosAdicionadosTable;
+    private javax.swing.JTable livrosTable;
     private javax.swing.JTable locacoesTable;
+    private javax.swing.JComboBox<String> selectUsuario;
     // End of variables declaration//GEN-END:variables
 }
