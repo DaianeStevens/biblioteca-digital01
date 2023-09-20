@@ -12,6 +12,8 @@ import br.edu.unijui.model.dao.LocacaoImpl;
 import br.edu.unijui.model.dao.UsuarioImpl;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -156,6 +158,11 @@ public class LocacaoForm extends javax.swing.JFrame {
         btnSalvar.setBackground(new java.awt.Color(0, 204, 51));
         btnSalvar.setForeground(new java.awt.Color(255, 255, 255));
         btnSalvar.setText("Salvar");
+        btnSalvar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSalvarMouseClicked(evt);
+            }
+        });
 
         selectUsuario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         selectUsuario.addActionListener(new java.awt.event.ActionListener() {
@@ -350,7 +357,7 @@ public class LocacaoForm extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         try {
             this.modelLivrosAdicionados = (DefaultTableModel) livrosAdicionadosTable.getModel();
-        modelLivrosAdicionados.setRowCount(0);
+            modelLivrosAdicionados.setRowCount(0);
             //Popula Table Locacoes
             this.model = (DefaultTableModel) locacoesTable.getModel();
             LocacaoImpl locacaoImpl = new LocacaoImpl();
@@ -413,9 +420,9 @@ public class LocacaoForm extends javax.swing.JFrame {
         int selectedRow = livrosTable.getSelectedRow();
         if (selectedRow >= 0) {
             // Aqui você pode acessar os dados da linha selecionada
-           Livro livroAdicionado= new Livro();
-            livroAdicionado.setId((Integer)livrosTable.getValueAt(selectedRow, 0));
-            livroAdicionado.setTitulo((String)livrosTable.getValueAt(selectedRow, 1));
+            Livro livroAdicionado = new Livro();
+            livroAdicionado.setId((Integer) livrosTable.getValueAt(selectedRow, 0));
+            livroAdicionado.setTitulo((String) livrosTable.getValueAt(selectedRow, 1));
             PopulateTableLivrosAdicionados(livroAdicionado);
             // Faça o que desejar com os dados da linha selecionada
             //System.out.println("Linha selecionada: " + codigo + ", " + titulo);
@@ -424,6 +431,42 @@ public class LocacaoForm extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_btnAdicionaLivroMouseClicked
+
+    private void btnSalvarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalvarMouseClicked
+        try {
+            //id do usuario
+            int indexUsuario = selectUsuario.getSelectedIndex();
+            Usuario objUusario = usuarios.get(indexUsuario);
+
+            LocacaoImpl locacaoImpl;
+
+            locacaoImpl = new LocacaoImpl();
+
+            Locacao objLocacao = new Locacao();
+            objLocacao.setIdUsuario(objUusario.getId());
+            objLocacao.setDtLocacao(new java.sql.Date(new Date().getTime()));
+ objLocacao.setDtPrazoDevolucao(new java.sql.Date(new Date().getTime()));
+            // Obtenha a data atual
+            Date dataAtual = new Date();
+            // Crie um objeto Calendar e configure-o com a data atual
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(dataAtual);
+            // Adicione 15 dias à data
+            calendar.add(Calendar.DAY_OF_MONTH, 15);
+            // Obtenha a nova data após adicionar os 15 dias
+            Date dataPrazo = calendar.getTime();
+            //objLocacao.setDtPrazoDevolucao(new java.sql.Date(dataPrazo.getTime()));
+
+            ArrayList<Livro> livrosAdicionados = buscaLivrosSelecionados();
+
+            locacaoImpl.insereLocacao(locacao, livrosAdicionados);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(LocacaoForm.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(LocacaoForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_btnSalvarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -489,6 +532,23 @@ public class LocacaoForm extends javax.swing.JFrame {
         rowData[0] = livro.getId();
         rowData[1] = livro.getTitulo();
         modelLivrosAdicionados.addRow(rowData);
+    }
+
+    private ArrayList<Livro> buscaLivrosSelecionados() {
+        ArrayList<Livro> livrosAdicionados = new ArrayList<Livro>();
+
+        int numRows = model.getRowCount();
+
+        for (int row = 0; row < numRows; row++) {
+            int codigo = (int) model.getValueAt(row, 0);
+
+            Livro livro = new Livro();
+            livro.setId(codigo);
+
+            livrosAdicionados.add(livro);
+        }
+
+        return livrosAdicionados;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
