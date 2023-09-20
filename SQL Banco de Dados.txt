@@ -89,14 +89,16 @@ CREATE TABLE `locacao` (
   `id_usuario` int NOT NULL,
   `dt_prazo_devolucao` date NOT NULL,
   `dt_locacao` date NOT NULL,
-  `dt_devolucao` date NOT NULL,
+  `dt_devolucao` date DEFAULT NULL,
 
   UNIQUE KEY `id_UNIQUE` (`id`),
   KEY `id_usuario_idx` (`id_usuario`),
   CONSTRAINT `id_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
 
-----------------------------------------------------
+
+
+
 
 /*Criando Tabela locacao_livro*/
 
