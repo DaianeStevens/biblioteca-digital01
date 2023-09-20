@@ -29,7 +29,7 @@ public class LivroImpl implements LivroDAO {
 
     private void inicializarPreparedStatements() throws SQLException {
         pstmtListaLivro = con.prepareStatement("select * from livro order by titulo");
-        pstmtListaLivroFiltro = con.prepareStatement("select * from livro where titulo like ? order by titulo");
+        pstmtListaLivroFiltro = con.prepareStatement("select * from livro where lower(titulo) like ? order by titulo");
     }
 
     @Override
@@ -39,7 +39,7 @@ public class LivroImpl implements LivroDAO {
         }
         ArrayList<Livro> livros = new ArrayList<Livro>();
         try {
-            pstmtListaLivroFiltro.setString(1, '%' + filtro + '%');
+            pstmtListaLivroFiltro.setString(1, '%' + filtro.toLowerCase() + '%');
             ResultSet resultSet = pstmtListaLivroFiltro.executeQuery();
             while (resultSet.next()) {
                 System.out.println("select livros filtro " + pstmtListaLivro.toString());

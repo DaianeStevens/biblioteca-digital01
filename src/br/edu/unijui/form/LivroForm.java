@@ -17,16 +17,15 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author chayk
  */
-public class LivrosForm extends javax.swing.JFrame {
+public class LivroForm extends javax.swing.JFrame {
 
     Livro livro = new Livro();
-    ArrayList<Livro> livros = new ArrayList<Livro>();
     DefaultTableModel model;
 
     /**
      * Creates new form LivrosForm
      */
-    public LivrosForm() {
+    public LivroForm() {
         initComponents();
     }
 
@@ -141,19 +140,12 @@ public class LivrosForm extends javax.swing.JFrame {
             model.setRowCount(0);
 
             LivroImpl livroImpl = new LivroImpl();
+            PopulateTableLivros(livroImpl.getLivrosFiltro(null));
 
-            livros = livroImpl.getLivrosFiltro(null);
-            for (Livro obj : livros) {
-                Object rowData[] = new Object[3];
-                rowData[0] = obj.getId();
-                rowData[1] = obj.getTitulo();
-                rowData[2] = obj.getAutor();
-                model.addRow(rowData);
-            }
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(LivrosForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LivroForm.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(LivrosForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LivroForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_formWindowOpened
 
@@ -161,19 +153,11 @@ public class LivrosForm extends javax.swing.JFrame {
         try {
             String filtro = inputFiltro.getText();
             LivroImpl livroImpl = new LivroImpl();
-  model.setRowCount(0);
-            livros = livroImpl.getLivrosFiltro(filtro);
-            for (Livro obj : livros) {
-                Object rowData[] = new Object[3];
-                rowData[0] = obj.getId();
-                rowData[1] = obj.getTitulo();
-                rowData[2] = obj.getAutor();
-                model.addRow(rowData);
-            }
+            PopulateTableLivros(livroImpl.getLivrosFiltro(filtro));
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(LivrosForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LivroForm.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(LivrosForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LivroForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnBuscaFiltroMouseClicked
 
@@ -194,22 +178,34 @@ public class LivrosForm extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LivrosForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LivroForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LivrosForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LivroForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LivrosForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LivroForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(LivrosForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LivroForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new LivrosForm().setVisible(true);
+                new LivroForm().setVisible(true);
             }
         });
+    }
+
+    private void PopulateTableLivros(ArrayList<Livro> livros) {
+        model.setRowCount(0);
+        for (Livro obj : livros) {
+            Object rowData[] = new Object[3];
+            rowData[0] = obj.getId();
+            rowData[1] = obj.getTitulo();
+            rowData[2] = obj.getAutor();
+            model.addRow(rowData);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

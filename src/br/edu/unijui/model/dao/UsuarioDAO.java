@@ -8,5 +8,5 @@ import java.util.ArrayList;
  * @author daias
  */
 public interface UsuarioDAO {
-    ArrayList<Usuario> getUsuarios();
+    ArrayList<Usuario> getUsuariosFiltro(String filtro);
 }

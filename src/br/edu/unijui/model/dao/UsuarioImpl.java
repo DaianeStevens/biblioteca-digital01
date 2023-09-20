@@ -25,16 +25,20 @@ public class UsuarioImpl implements UsuarioDAO {
     }
 
     private void inicializarPreparedStatements() throws SQLException {
-        pstmtListaUsuario = con.prepareStatement("select * from usuario order by nome");
+        pstmtListaUsuario = con.prepareStatement("select * from usuario where lower(nome) like ? order by nome");
     }
 
     @Override
-    public ArrayList<Usuario> getUsuarios() {
+    public ArrayList<Usuario> getUsuariosFiltro(String filtro) {
+        if (filtro == null) {
+            filtro = "";
+        }
         ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
         try {
+            pstmtListaUsuario.setString(1, '%' + filtro.toLowerCase() + '%');
             ResultSet resultSet = pstmtListaUsuario.executeQuery();
             while (resultSet.next()) {
-                System.out.println("select usuarios");
+                System.out.println("select usuarios filtro");
                 Usuario usuario = new Usuario();
                 usuario.setId(resultSet.getInt(1));
                 usuario.setNome((String) resultSet.getObject(2));
