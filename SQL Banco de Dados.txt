@@ -37,7 +37,6 @@ CREATE TABLE `livro` (
   `id` int NOT NULL AUTO_INCREMENT,
   `titulo` varchar(50) DEFAULT NULL,
   `autor` varchar(50) DEFAULT NULL,
-  `status` char(1) DEFAULT NULL,
   `qtd_exemplar` int DEFAULT NULL,
   `dt_inclusao` date DEFAULT NULL,
   `dt_baixa` date DEFAULT NULL,
@@ -48,37 +47,37 @@ CREATE TABLE `livro` (
 
 /*Insert da tabela*/
 
-insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('O ladrão de raios', 'Rick Riordan', 'A',15, '2023-09-15', null );
-insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('Jogos Vorazes', 'Suzanne Collins', 'A',10, '2023-09-15', null );
-insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('Divergente', ' Veronica Roth', 'A',11, '2023-09-15', null );
-insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('Maze Runner: correr ou morrer', ' James Dashner', 'A',15, '2023-09-15', null );
-insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('A culpa é das estrelas', 'John Green', 'A',20, '2023-09-15', null );
-insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('Cidades de papel', 'John Green', 'A',25, '2023-09-15', null );
-insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('É assim que começa', ' Colleen Hoover', 'A',8, '2023-09-15', null );
-insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('O despertar: Legado do coração de dragão', 'Nora Roberts', 'A',6, '2023-09-15', null );
-insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('O Homem de Giz', 'C. J. Tudor', 'A',13, '2023-09-15', null );
-insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('Caixa de pássaros: Não abra os olhos: 1 ', 'Josh Malerman', 'A',16, '2023-09-15', null );
-insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('O vilarejo ', ' Raphael Montes', 'A',19, '2023-09-15', null );
-insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('A grande caçada: Série a roda do tempo vol. 2', 'Robert Jordan', 'A',3, '2023-09-15', null );
-insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('O Conde de Monte Cristo', ' Alexandre Dumas', 'A',2, '2023-09-15', null );
-insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('Eu sou Malala', ' Walter Isaacson', 'A',25, '2023-09-15', null );
-insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('Elon Musk', ' Walter Isaacson', 'A',11, '2023-09-15', null );
-insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('Steve Jobs', ' Walter Isaacson', 'A',16, '2023-09-15', null );
-insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('Em busca de mim', 'Viola Davis', 'A',18, '2023-09-15', null );
-insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('Toda poesia', 'Paulo Leminski', 'A',5, '2023-09-15', null );
-insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('A bruxa não vai para a fogueira neste livro', ' Amanda Lovelace', 'A',4, '2023-09-15', null );
-insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('A Guerra dos Tronos : As Crônicas de Gelo e Fogo', 'George R. R. Martin', 'A',25, '2023-09-15', null );
-insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('A Sociedade do Anel', 'J. R. R. Tolkien', 'A',3, '2023-09-15', null );
-insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('O Hobbit', 'J. R. R. Tolkien', 'A',5, '2023-09-15', null );
-insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('I, Robot', ' Isaac Asimov', 'A',2, '2023-09-15', null );
-insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('A guerra dos mundos', 'H.G. Wells', 'A',15, '2023-09-15', null );
-insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('Pai Rico, Pai Pobre', ' Robert T. Kiyosaki ', 'A',9, '2023-09-15', null );
-insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('O homem mais rico da Babilônia', 'George S Clason', 'A',21, '2023-09-15', null );
-insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('Os segredos da mente milionária', 'T. Harv Eker', 'A',25, '2023-09-15', null );
-insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('A psicologia financeira', 'Morgan Housel', 'A',11, '2023-09-15', null );
-insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('Mindset: A nova psicologia do sucesso', 'Carol S. Dweck', 'A',35, '2023-09-15', null );
-insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('O poder do hábito', ' Charles Duhigg', 'A',26, '2023-09-15', null );
-insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('Essencialismo: A disciplinada busca por menos', ' Greg McKeown', 'A',24, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('O ladrão de raios', 'Rick Riordan',15, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('Jogos Vorazes', 'Suzanne Collins',10, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('Divergente', ' Veronica Roth',11, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('Maze Runner: correr ou morrer', ' James Dashner',15, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('A culpa é das estrelas', 'John Green',20, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('Cidades de papel', 'John Green',25, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('É assim que começa', ' Colleen Hoover',8, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('O despertar: Legado do coração de dragão', 'Nora Roberts',6, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('O Homem de Giz', 'C. J. Tudor',13, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('Caixa de pássaros: Não abra os olhos: 1 ', 'Josh Malerman',16, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('O vilarejo ', ' Raphael Montes',19, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('A grande caçada: Série a roda do tempo vol. 2', 'Robert Jordan',3, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('O Conde de Monte Cristo', ' Alexandre Dumas',2, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('Eu sou Malala', ' Walter Isaacson',25, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('Elon Musk', ' Walter Isaacson',11, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('Steve Jobs', ' Walter Isaacson',16, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('Em busca de mim', 'Viola Davis',18, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('Toda poesia', 'Paulo Leminski',5, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('A bruxa não vai para a fogueira neste livro', ' Amanda Lovelace',4, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('A Guerra dos Tronos : As Crônicas de Gelo e Fogo', 'George R. R. Martin',25, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('A Sociedade do Anel', 'J. R. R. Tolkien',3, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('O Hobbit', 'J. R. R. Tolkien',5, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('I, Robot', ' Isaac Asimov',2, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('A guerra dos mundos', 'H.G. Wells',15, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('Pai Rico, Pai Pobre', ' Robert T. Kiyosaki ',9, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('O homem mais rico da Babilônia', 'George S Clason',21, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('Os segredos da mente milionária', 'T. Harv Eker',25, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('A psicologia financeira', 'Morgan Housel',11, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('Mindset: A nova psicologia do sucesso', 'Carol S. Dweck',35, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('O poder do hábito', ' Charles Duhigg',26, '2023-09-15', null );
+insert into livro (titulo, autor,status,qtd_exemplar, dt_inclusao, dt_baixa) values ('Essencialismo: A disciplinada busca por menos', ' Greg McKeown',24, '2023-09-15', null );
 
 
 
