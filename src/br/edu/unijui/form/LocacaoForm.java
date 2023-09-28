@@ -38,10 +38,12 @@ public class LocacaoForm extends javax.swing.JFrame {
      */
     public LocacaoForm() {
         initComponents();
+        this.model = (DefaultTableModel) locacoesTable.getModel();
+        this.modelLivrosAdicionados = (DefaultTableModel) livrosAdicionadosTable.getModel();
 
+        disabledInputs();
         btnEditar.setEnabled(false);
         btnExcluir.setEnabled(false);
-        btnSalvar.setEnabled(false);
 
         locacoesTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
@@ -152,8 +154,18 @@ public class LocacaoForm extends javax.swing.JFrame {
         });
 
         btnEditar.setText("Editar");
+        btnEditar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEditarMouseClicked(evt);
+            }
+        });
 
         btnExcluir.setText("Excluir");
+        btnExcluir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnExcluirMouseClicked(evt);
+            }
+        });
 
         btnSalvar.setBackground(new java.awt.Color(0, 204, 51));
         btnSalvar.setForeground(new java.awt.Color(255, 255, 255));
@@ -356,12 +368,7 @@ public class LocacaoForm extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         try {
-            this.modelLivrosAdicionados = (DefaultTableModel) livrosAdicionadosTable.getModel();
-            modelLivrosAdicionados.setRowCount(0);
-            //Popula Table Locacoes
-            this.model = (DefaultTableModel) locacoesTable.getModel();
-            LocacaoImpl locacaoImpl = new LocacaoImpl();
-            PopulateTableLocacoes(locacaoImpl.getLocacaoes());
+            buscaLocacoes();
 
             //Popula Table Livros
             this.modelLivros = (DefaultTableModel) livrosTable.getModel();
@@ -384,10 +391,13 @@ public class LocacaoForm extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void btnCadastrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCadastrarMouseClicked
+        enabledInputs();
         btnEditar.setEnabled(false);
         btnExcluir.setEnabled(false);
-        btnSalvar.setEnabled(true);
+//        btnSalvar.setEnabled(true);
         locacoesTable.clearSelection();
+
+
     }//GEN-LAST:event_btnCadastrarMouseClicked
 
     private void selectUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectUsuarioActionPerformed
@@ -445,7 +455,7 @@ public class LocacaoForm extends javax.swing.JFrame {
             Locacao objLocacao = new Locacao();
             objLocacao.setIdUsuario(objUusario.getId());
             objLocacao.setDtLocacao(new java.sql.Date(new Date().getTime()));
- objLocacao.setDtPrazoDevolucao(new java.sql.Date(new Date().getTime()));
+            objLocacao.setDtPrazoDevolucao(new java.sql.Date(new Date().getTime()));
             // Obtenha a data atual
             Date dataAtual = new Date();
             // Crie um objeto Calendar e configure-o com a data atual
@@ -459,14 +469,41 @@ public class LocacaoForm extends javax.swing.JFrame {
 
             ArrayList<Livro> livrosAdicionados = buscaLivrosSelecionados();
 
-            locacaoImpl.insereLocacao(locacao, livrosAdicionados);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(LocacaoForm.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
+            locacaoImpl.insereLocacao(objLocacao, livrosAdicionados);
+            buscaLocacoes();
+            disabledInputs();
+
+        } catch (ClassNotFoundException | SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao cadastrar locação!", "Erro!", ERROR);
             Logger.getLogger(LocacaoForm.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }//GEN-LAST:event_btnSalvarMouseClicked
+
+    private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
+        disabledInputs();
+
+    }//GEN-LAST:event_btnEditarMouseClicked
+
+    private void btnExcluirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExcluirMouseClicked
+        LocacaoImpl locacaoImpl;
+        try {
+            locacaoImpl = new LocacaoImpl();
+
+            int selectedRow = locacoesTable.getSelectedRow();
+            if (selectedRow >= 0) {
+
+                Integer codigo = (int) locacoesTable.getValueAt(selectedRow, 0);
+
+                locacaoImpl.deletaLocacao(codigo);
+                buscaLocacoes();
+            }
+
+        } catch (ClassNotFoundException | SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao excluir locação!", "Erro!", ERROR);
+            Logger.getLogger(LocacaoForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnExcluirMouseClicked
 
     /**
      * @param args the command line arguments
@@ -503,6 +540,31 @@ public class LocacaoForm extends javax.swing.JFrame {
         });
     }
 
+    private void disabledInputs() {
+        selectUsuario.setEnabled(false);
+        inputFiltroLivro.setEnabled(false);
+        btnFiltroLivro.setEnabled(false);
+        livrosTable.setEnabled(false);
+        livrosAdicionadosTable.setEnabled(false);
+        btnAdicionaLivro.setEnabled(false);
+        btnSalvar.setEnabled(false);
+
+        inputFiltroLivro.setText("");
+        modelLivrosAdicionados.setRowCount(0);
+
+    }
+
+    private void enabledInputs() {
+
+        selectUsuario.setEnabled(true);
+        inputFiltroLivro.setEnabled(true);
+        btnFiltroLivro.setEnabled(true);
+        livrosTable.setEnabled(true);
+        livrosAdicionadosTable.setEnabled(true);
+        btnAdicionaLivro.setEnabled(true);
+        btnSalvar.setEnabled(true);
+    }
+
     private void PopulateTableLocacoes(ArrayList<Locacao> locacoes) {
         model.setRowCount(0);
         for (Locacao obj : locacoes) {
@@ -537,10 +599,10 @@ public class LocacaoForm extends javax.swing.JFrame {
     private ArrayList<Livro> buscaLivrosSelecionados() {
         ArrayList<Livro> livrosAdicionados = new ArrayList<Livro>();
 
-        int numRows = model.getRowCount();
+        int numRows = modelLivrosAdicionados.getRowCount();
 
         for (int row = 0; row < numRows; row++) {
-            int codigo = (int) model.getValueAt(row, 0);
+            int codigo = (int) modelLivrosAdicionados.getValueAt(row, 0);
 
             Livro livro = new Livro();
             livro.setId(codigo);
@@ -549,6 +611,18 @@ public class LocacaoForm extends javax.swing.JFrame {
         }
 
         return livrosAdicionados;
+    }
+
+    private void buscaLocacoes() {
+        //Popula Table Locacoes
+        LocacaoImpl locacaoImpl;
+        try {
+            locacaoImpl = new LocacaoImpl();
+
+            PopulateTableLocacoes(locacaoImpl.getLocacaoes());
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(LocacaoForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
