@@ -2,7 +2,7 @@ package br.edu.unijui.model.dao;
 
 import br.edu.unijui.dataBase.DataBase;
 import br.edu.unijui.model.Livro;
-import br.edu.unijui.model.Usuario;
+import static java.awt.image.ImageObserver.ERROR;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -21,6 +22,7 @@ public class LivroImpl implements LivroDAO {
     private final Connection con;
     private PreparedStatement pstmtListaLivro;
     private PreparedStatement pstmtListaLivroFiltro;
+    private PreparedStatement pstmtInsereLivro;
 
     public LivroImpl() throws ClassNotFoundException, SQLException {
         con = new DataBase().getConnection();
@@ -30,6 +32,8 @@ public class LivroImpl implements LivroDAO {
     private void inicializarPreparedStatements() throws SQLException {
         pstmtListaLivro = con.prepareStatement("select * from livro order by titulo");
         pstmtListaLivroFiltro = con.prepareStatement("select * from livro where lower(titulo) like ? order by titulo");
+        pstmtInsereLivro = con.prepareStatement("insert into livro values(default, ?, ?, ?, ?, null)");
+
     }
 
     @Override
@@ -62,6 +66,24 @@ public class LivroImpl implements LivroDAO {
 
         }
         return livros;
+    }
+    
+    public void insereLivro(Livro livro) {
+        try {
+
+            pstmtInsereLivro.setString(1, livro.getTitulo());
+            pstmtInsereLivro.setString(2, livro.getAutor());
+            pstmtInsereLivro.setInt(3, livro.getQtdExemplar());
+            pstmtInsereLivro.setDate(4, (Date) livro.getDtInclusao());
+
+            pstmtInsereLivro.execute();
+            JOptionPane.showMessageDialog(null, "Livro cadastrado com sucesso!");
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao cadastrar livro!", "Erro!", ERROR);
+            Logger.getLogger(LivroImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
 }
