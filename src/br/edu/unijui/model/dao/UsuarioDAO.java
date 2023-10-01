@@ -9,4 +9,7 @@ import java.util.ArrayList;
  */
 public interface UsuarioDAO {
     ArrayList<Usuario> getUsuariosFiltro(String filtro);
+    
+    void insereUsuario(Usuario usuario);
+
 }

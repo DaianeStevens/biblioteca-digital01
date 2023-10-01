@@ -9,4 +9,7 @@ import java.util.ArrayList;
  */
 public interface LivroDAO {
     ArrayList<Livro> getLivrosFiltro(String filtro);
+    
+    void insereLivro(Livro livro);
+
 }
