@@ -11,9 +11,9 @@ public class DataBase {
     private Connection connection;
     
     // banco de dados padrão
-    private final String DATABASE_URL = "jdbc:mysql://localhost:3306/biblioteca-digital";
+    private final String DATABASE_URL = "jdbc:mysql://localhost:3306/biblioteca";
     static final String USERNAME = "root";
-    static final String PASSWORD = "root";
+    static final String PASSWORD = "123456";
 
     public DataBase(String url, String userName, String password) throws SQLException {
         this.url = url;

@@ -42,8 +42,7 @@ public class LocacaoForm extends javax.swing.JFrame {
         this.modelLivrosAdicionados = (DefaultTableModel) livrosAdicionadosTable.getModel();
 
         disabledInputs();
-        btnEditar.setEnabled(false);
-        btnExcluir.setEnabled(false);
+        btnDevolver.setEnabled(false);
 
         locacoesTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
@@ -52,8 +51,7 @@ public class LocacaoForm extends javax.swing.JFrame {
                     int selectedRow = locacoesTable.getSelectedRow();
                     if (selectedRow >= 0) {
 
-                        btnEditar.setEnabled(true);
-                        btnExcluir.setEnabled(true);
+                        btnDevolver.setEnabled(true);
                         // Aqui você pode acessar os dados da linha selecionada
                         Object codigo = locacoesTable.getValueAt(selectedRow, 0);
                         Object codigoUsuario = locacoesTable.getValueAt(selectedRow, 1);
@@ -64,8 +62,7 @@ public class LocacaoForm extends javax.swing.JFrame {
                         // Faça o que desejar com os dados da linha selecionada
                         System.out.println("Linha selecionada: " + codigo + ", " + codigoUsuario + ", " + dataLocacao + ", " + dataPrazoDevolucao + ", " + dataDevolucao);
                     } else {
-                        btnEditar.setEnabled(false);
-                        btnExcluir.setEnabled(false);
+                        btnDevolver.setEnabled(false);
                         btnSalvar.setEnabled(false);
                     }
                 }
@@ -86,8 +83,7 @@ public class LocacaoForm extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         locacoesTable = new javax.swing.JTable();
         btnCadastrar = new javax.swing.JButton();
-        btnEditar = new javax.swing.JButton();
-        btnExcluir = new javax.swing.JButton();
+        btnDevolver = new javax.swing.JButton();
         btnSalvar = new javax.swing.JButton();
         selectUsuario = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
@@ -153,17 +149,15 @@ public class LocacaoForm extends javax.swing.JFrame {
             }
         });
 
-        btnEditar.setText("Editar");
-        btnEditar.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnDevolver.setText("Devolver");
+        btnDevolver.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnEditarMouseClicked(evt);
+                btnDevolverMouseClicked(evt);
             }
         });
-
-        btnExcluir.setText("Excluir");
-        btnExcluir.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnExcluirMouseClicked(evt);
+        btnDevolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDevolverActionPerformed(evt);
             }
         });
 
@@ -293,9 +287,7 @@ public class LocacaoForm extends javax.swing.JFrame {
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(btnCadastrar)
                             .addGap(18, 18, 18)
-                            .addComponent(btnEditar)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(btnExcluir))
+                            .addComponent(btnDevolver))
                         .addComponent(jScrollPane1)
                         .addComponent(jSeparator1)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -354,8 +346,7 @@ public class LocacaoForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCadastrar)
-                    .addComponent(btnEditar)
-                    .addComponent(btnExcluir))
+                    .addComponent(btnDevolver))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(21, 21, 21))
@@ -390,8 +381,7 @@ public class LocacaoForm extends javax.swing.JFrame {
 
     private void btnCadastrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCadastrarMouseClicked
         enabledInputs();
-        btnEditar.setEnabled(false);
-        btnExcluir.setEnabled(false);
+        btnDevolver.setEnabled(false);
 //        btnSalvar.setEnabled(true);
         locacoesTable.clearSelection();
 
@@ -478,12 +468,7 @@ public class LocacaoForm extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnSalvarMouseClicked
 
-    private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
-        disabledInputs();
-
-    }//GEN-LAST:event_btnEditarMouseClicked
-
-    private void btnExcluirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExcluirMouseClicked
+    private void btnDevolverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDevolverMouseClicked
         LocacaoImpl locacaoImpl;
         try {
             locacaoImpl = new LocacaoImpl();
@@ -493,7 +478,7 @@ public class LocacaoForm extends javax.swing.JFrame {
 
                 Integer codigo = (int) locacoesTable.getValueAt(selectedRow, 0);
 
-                locacaoImpl.deletaLocacao(codigo);
+                locacaoImpl.devolveLocacao(codigo);
                 buscaLocacoes();
             }
 
@@ -501,7 +486,11 @@ public class LocacaoForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Erro ao excluir locação!", "Erro!", ERROR);
             Logger.getLogger(LocacaoForm.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_btnExcluirMouseClicked
+    }//GEN-LAST:event_btnDevolverMouseClicked
+
+    private void btnDevolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDevolverActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDevolverActionPerformed
 
     /**
      * @param args the command line arguments
@@ -626,8 +615,7 @@ public class LocacaoForm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdicionaLivro;
     private javax.swing.JButton btnCadastrar;
-    private javax.swing.JButton btnEditar;
-    private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnDevolver;
     private javax.swing.JButton btnFiltroLivro;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JTextField inputFiltroLivro;

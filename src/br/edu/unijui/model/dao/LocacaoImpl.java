@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,6 +32,7 @@ public class LocacaoImpl implements LocacaoDAO {
 
     private PreparedStatement pstmtInsereLocacaoLivro;
     private PreparedStatement pstmtDeletaLocacaoLivro;
+    private PreparedStatement pstmtDevolveLocacaoLivro;
 
     public LocacaoImpl() throws ClassNotFoundException, SQLException {
         con = new DataBase().getConnection();
@@ -44,6 +46,7 @@ public class LocacaoImpl implements LocacaoDAO {
 
         pstmtInsereLocacaoLivro = con.prepareStatement("insert into locacao_livro values(default, ?,  ?)");
         pstmtDeletaLocacaoLivro = con.prepareStatement("delete from locacao_livro where id_locacao = ?");
+        pstmtDevolveLocacaoLivro = con.prepareStatement("UPDATE locacao SET dt_devolucao=? WHERE id=?");
     }
 
     @Override
@@ -131,7 +134,7 @@ public class LocacaoImpl implements LocacaoDAO {
         try {
             con.setAutoCommit(false);
             try {
-                
+
                 pstmtDeletaLocacaoLivro.setInt(1, id);
                 pstmtDeletaLocacaoLivro.execute();
                 pstmtDeletaLocacao.setInt(1, id);
@@ -155,5 +158,21 @@ public class LocacaoImpl implements LocacaoDAO {
             Logger.getLogger(LocacaoImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+
+    @Override
+    public void devolveLocacao(Integer id) {
+        try {
+            LocalDate dataAtual = LocalDate.now();
+            Date dataAtualComoSqlDate = Date.valueOf(dataAtual);
+            pstmtDevolveLocacaoLivro.setDate(1, dataAtualComoSqlDate);
+            pstmtDevolveLocacaoLivro.setInt(2, id);
+            pstmtDevolveLocacaoLivro.execute();
+
+            JOptionPane.showMessageDialog(null, "Locação devolvida com sucesso!");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao cadastrar locação!", "Erro!", ERROR);
+            Logger.getLogger(LocacaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
