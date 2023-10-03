@@ -1,9 +1,10 @@
 package br.edu.unijui.model;
 
 public class LocacaoLivro {
+
     private int Id;
     private int IdLocacao;
-    private int IdLivro;    
+    private int IdLivro;
 
     public int getId() {
         return Id;
@@ -29,6 +30,4 @@ public class LocacaoLivro {
         this.IdLivro = IdLivro;
     }
 
-    
-    
 }

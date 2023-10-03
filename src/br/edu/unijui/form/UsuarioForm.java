@@ -267,7 +267,7 @@ public class UsuarioForm extends javax.swing.JFrame {
         MenuForm secondFrame = new MenuForm();
         secondFrame.setVisible(true);
         // Hide the current frame if needed
-        dispose();        
+        dispose();
     }//GEN-LAST:event_btnBackMenuMouseClicked
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
@@ -275,7 +275,7 @@ public class UsuarioForm extends javax.swing.JFrame {
             UsuarioImpl usuarioImpl;
             usuarioImpl = new UsuarioImpl();
             Usuario objUsuario = new Usuario();
-            
+
             objUsuario.setNome(txtNome.getText());
             objUsuario.setSenha(txtCpf.getText());
             objUsuario.setCpf(txtCpf.getText());
@@ -286,9 +286,9 @@ public class UsuarioForm extends javax.swing.JFrame {
             String uf = (String) jcbEstado.getSelectedItem();
 
             objUsuario.setUf(uf);
-            
+
             usuarioImpl.insereUsuario(objUsuario);
-            
+
             txtNome.setText("");
             txtCpf.setText("");
             txtTelefone.setText("");
@@ -296,14 +296,14 @@ public class UsuarioForm extends javax.swing.JFrame {
             txtBairro.setText("");
             txtCidade.setText("");
             jcbEstado.setSelectedItem("AC");
-                    
-        }catch (ClassNotFoundException ex) {
+
+        } catch (ClassNotFoundException ex) {
             Logger.getLogger(LivroForm.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioForm.class.getName()).log(Level.SEVERE, null, ex);
         }
 // TODO add your handling code here:
-        
+
 // TODO add your handling code here:
     }//GEN-LAST:event_btnSalvarActionPerformed
 

@@ -97,5 +97,4 @@ public class Usuario {
         this.Ativo = Ativo;
     }
 
-    
 }

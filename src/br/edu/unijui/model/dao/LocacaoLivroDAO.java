@@ -9,5 +9,5 @@ package br.edu.unijui.model.dao;
  * @author chayk
  */
 public interface LocacaoLivroDAO {
-    
+
 }

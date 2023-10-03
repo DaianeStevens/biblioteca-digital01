@@ -7,9 +7,10 @@ import java.util.Date;
  * @author daias
  */
 public class Livro {
+
     private int Id;
     private String Titulo;
-    private String Autor; 
+    private String Autor;
     private int QtdExemplar;
     private Date DtInclusao;
     private Date DtBaixa;
@@ -29,7 +30,7 @@ public class Livro {
     public void setTitulo(String Titulo) {
         this.Titulo = Titulo;
     }
-    
+
     public String getAutor() {
         return Autor;
     }
@@ -37,7 +38,6 @@ public class Livro {
     public void setAutor(String Autor) {
         this.Autor = Autor;
     }
-
 
     public int getQtdExemplar() {
         return QtdExemplar;
@@ -62,6 +62,5 @@ public class Livro {
     public void setDtBaixa(Date DtBaixa) {
         this.DtBaixa = DtBaixa;
     }
-    
-    
+
 }

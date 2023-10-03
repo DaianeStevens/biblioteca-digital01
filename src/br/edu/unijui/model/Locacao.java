@@ -7,6 +7,7 @@ import java.sql.Date;
  * @author daias
  */
 public class Locacao {
+
     private int Id;
     private int IdUsuario;
     private Date DtPrazoDevolucao;
@@ -53,6 +54,4 @@ public class Locacao {
         this.DtDevolucao = DtDevolucao;
     }
 
-    
-    
 }

@@ -253,7 +253,7 @@ public class LivroForm extends javax.swing.JFrame {
             Integer qtd = Integer.valueOf(txtQtd.getText());
             objLivro.setQtdExemplar(qtd);
             objLivro.setDtInclusao(new java.sql.Date(new Date().getTime()));
-           
+
             livroImpl.insereLivro(objLivro);
             txtTitulo.setText("");
             txtAutor.setText("");
