@@ -58,9 +58,6 @@ public class LocacaoForm extends javax.swing.JFrame {
                         Object dataLocacao = locacoesTable.getValueAt(selectedRow, 2);
                         Object dataPrazoDevolucao = locacoesTable.getValueAt(selectedRow, 3);
                         Object dataDevolucao = locacoesTable.getValueAt(selectedRow, 4);
-
-                        // Faça o que desejar com os dados da linha selecionada
-                        System.out.println("Linha selecionada: " + codigo + ", " + codigoUsuario + ", " + dataLocacao + ", " + dataPrazoDevolucao + ", " + dataDevolucao);
                     } else {
                         btnDevolver.setEnabled(false);
                         btnSalvar.setEnabled(false);

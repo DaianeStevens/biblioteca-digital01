@@ -258,6 +258,8 @@ public class LivroForm extends javax.swing.JFrame {
             txtTitulo.setText("");
             txtAutor.setText("");
             txtQtd.setText("");
+            
+            PopulateTableLivros(livroImpl.getLivrosFiltro(null));
 
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(LivroForm.class.getName()).log(Level.SEVERE, null, ex);

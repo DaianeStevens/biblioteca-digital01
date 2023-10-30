@@ -297,6 +297,7 @@ public class UsuarioForm extends javax.swing.JFrame {
             txtCidade.setText("");
             jcbEstado.setSelectedItem("AC");
 
+            PopulateTableUsuarios(usuarioImpl.getUsuariosFiltro(null));
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(LivroForm.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {

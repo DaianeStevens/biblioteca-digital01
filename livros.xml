@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<livros>
+    <livro cod='L01' dept='D01'> 
+       <titulo>Mulheres Enraizadas</titulo>
+       <autor>Viviane Martinello</autor>
+       <qtd_exemplar>5</qtd_exemplar>
+       <dt_incluir></dt_incluir>
+       <dt_baixa></dt_baixa>
+    </livro>
+	
+    <livro cod='E02' dept='D01'> 
+        <nome>Maria</nome>
+        <sobrenome>Silva</sobrenome>
+    </livro>
+</livros> 
+
+
+
