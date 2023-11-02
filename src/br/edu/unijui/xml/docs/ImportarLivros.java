@@ -29,6 +29,7 @@ public class ImportarLivros {
         Document doc = ManipuladorXML.readXmlFile("./livros.xml");
         Element root = doc.getDocumentElement();
         NodeList livros = root.getElementsByTagName("livro");
+        var teste = livros.getLength();
         for (int i = 0; i < livros.getLength(); i++) {
             Element livro = (Element) livros.item(i);
 
@@ -41,13 +42,29 @@ public class ImportarLivros {
             String autor = autorNodes.getLength() > 0 ? autorNodes.item(0).getTextContent() : "Autor não encontrado";
 
             NodeList qtdExemplarNodes = livro.getElementsByTagName("qtd_exemplar");
-            int qtdExemplar = qtdExemplarNodes.getLength() > 0 ? Integer.parseInt(qtdExemplarNodes.item(0).getTextContent()) : 0;
+            String qtdExemplarStr = qtdExemplarNodes.getLength() > 0 ? (qtdExemplarNodes.item(0).getTextContent()) : "0";
 
             NodeList dtIncluirNodes = livro.getElementsByTagName("dt_incluir");
-            Date dtIncluir = Date.valueOf(dtIncluirNodes.getLength() > 0 ? dtIncluirNodes.item(0).getTextContent() : null);
+            String dtIncluirStr = dtIncluirNodes.getLength() > 0 ? dtIncluirNodes.item(0).getTextContent() : "";
 
             NodeList dtBaixaNodes = livro.getElementsByTagName("dt_baixa");
-            Date dtBaixa = Date.valueOf(dtBaixaNodes.getLength() > 0 ? dtBaixaNodes.item(0).getTextContent() : null);
+            String dtBaixaStr = dtBaixaNodes.getLength() > 0 ? dtBaixaNodes.item(0).getTextContent() : "";
+
+            Date dtIncluir = new java.sql.Date(new java.util.Date().getTime());
+            Date dtBaixa = null;
+            int qtdExemplar = 0;
+
+            if(qtdExemplarStr!=""){
+                qtdExemplar= Integer.parseInt(qtdExemplarStr);
+            }
+            
+            if (dtIncluirStr != "") {
+                dtIncluir = Date.valueOf(dtIncluirStr);
+            }
+
+            if (dtBaixaStr != "") {
+                dtBaixa = Date.valueOf(dtBaixaStr);
+            }
 
             Livro objLivro = new Livro();
 
@@ -56,9 +73,9 @@ public class ImportarLivros {
             objLivro.setQtdExemplar(qtdExemplar);
             objLivro.setDtInclusao(dtIncluir);
             objLivro.setDtBaixa(dtBaixa);
-            
-           LivroImpl livroImpl = new LivroImpl();
-           livroImpl.insereLivro(objLivro);
+
+            LivroImpl livroImpl = new LivroImpl();
+            livroImpl.insereLivro(objLivro);
         }
 
     }

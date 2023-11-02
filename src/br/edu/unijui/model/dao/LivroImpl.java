@@ -32,7 +32,7 @@ public class LivroImpl implements LivroDAO {
     private void inicializarPreparedStatements() throws SQLException {
         pstmtListaLivro = con.prepareStatement("select * from livro order by titulo");
         pstmtListaLivroFiltro = con.prepareStatement("select * from livro where lower(titulo) like ? order by titulo");
-        pstmtInsereLivro = con.prepareStatement("insert into livro values(default, ?, ?, ?, ?, null)");
+        pstmtInsereLivro = con.prepareStatement("insert into livro values(default, ?, ?, ?, ?, ?)");
 
     }
 
@@ -75,9 +75,10 @@ public class LivroImpl implements LivroDAO {
             pstmtInsereLivro.setString(2, livro.getAutor());
             pstmtInsereLivro.setInt(3, livro.getQtdExemplar());
             pstmtInsereLivro.setDate(4, (Date) livro.getDtInclusao());
+            pstmtInsereLivro.setDate(5, (Date) livro.getDtBaixa());
 
             pstmtInsereLivro.execute();
-            JOptionPane.showMessageDialog(null, "Livro cadastrado com sucesso!");
+            //JOptionPane.showMessageDialog(null, "Livro cadastrado com sucesso!");
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao cadastrar livro!", "Erro!", ERROR);

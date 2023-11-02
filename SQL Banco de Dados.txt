@@ -35,7 +35,7 @@ insert into usuario values (default,'Laura Quadros', '0WW\\km:', '21987523556', 
 
 CREATE TABLE `livro` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `titulo` varchar(50) DEFAULT NULL,
+  `titulo` varchar(250) DEFAULT NULL,
   `autor` varchar(50) DEFAULT NULL,
   `qtd_exemplar` int DEFAULT NULL,
   `dt_inclusao` date DEFAULT NULL,

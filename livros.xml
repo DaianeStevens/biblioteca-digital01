@@ -5,7 +5,7 @@
        <autor>Viviane Martinello</autor>
        <qtd_exemplar>5</qtd_exemplar>
        <dt_incluir>2023-01-20</dt_incluir>
-       <dt_baixa>2023-01-20</dt_baixa>
+       <dt_baixa></dt_baixa>
     </livro>
 	<livro>
         <titulo>Liberte-se da sua mente: interrompendo a espiral de pensamentos tóxicos</titulo>
@@ -25,8 +25,8 @@
         <titulo>Dom Casmurro</titulo>
         <autor>Machado Assis</autor>
         <qtd_exemplar></qtd_exemplar>
-        <dt_incluir></dt_incluir>
-        <dt_baixa></dt_baixa>
+        <dt_incluir>2022-01-20</dt_incluir>
+        <dt_baixa>2023-01-20</dt_baixa>
     </livro>
 </livros> 
 
