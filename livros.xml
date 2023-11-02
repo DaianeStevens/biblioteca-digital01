@@ -1,16 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <livros>
-    <livro cod='L01' dept='D01'> 
+    <livro> 
        <titulo>Mulheres Enraizadas</titulo>
        <autor>Viviane Martinello</autor>
        <qtd_exemplar>5</qtd_exemplar>
-       <dt_incluir></dt_incluir>
-       <dt_baixa></dt_baixa>
+       <dt_incluir>2023-01-20</dt_incluir>
+       <dt_baixa>2023-01-20</dt_baixa>
     </livro>
-	
-    <livro cod='E02' dept='D01'> 
-        <nome>Maria</nome>
-        <sobrenome>Silva</sobrenome>
+	<livro>
+        <titulo>Liberte-se da sua mente: interrompendo a espiral de pensamentos tóxicos</titulo>
+        <autor>Jennie Allen</autor>
+        <qtd_exemplar></qtd_exemplar>
+        <dt_incluir></dt_incluir>
+        <dt_baixa></dt_baixa>
+    </livro>
+    <livro>
+        <titulo>O poder da paciência: Como diminuir a pressa e viver com mais tranquilidade e paz.</titulo>
+        <autor>M. J. Ryan</autor>
+        <qtd_exemplar></qtd_exemplar>
+        <dt_incluir></dt_incluir>
+        <dt_baixa></dt_baixa>
+    </livro>
+    <livro>
+        <titulo>Dom Casmurro</titulo>
+        <autor>Machado Assis</autor>
+        <qtd_exemplar></qtd_exemplar>
+        <dt_incluir></dt_incluir>
+        <dt_baixa></dt_baixa>
     </livro>
 </livros> 
 

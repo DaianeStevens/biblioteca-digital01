@@ -4,11 +4,19 @@
  */
 package br.edu.unijui.xml.docs;
 
+import br.edu.unijui.model.Livro;
+import br.edu.unijui.model.dao.LivroImpl;
 import br.edu.unijui.xml.ManipuladorXML;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 /**
  *
@@ -16,36 +24,41 @@ import org.w3c.dom.Document;
  */
 public class ImportarLivros {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ClassNotFoundException, SQLException {
 
-        try {
+        Document doc = ManipuladorXML.readXmlFile("./livros.xml");
+        Element root = doc.getDocumentElement();
+        NodeList livros = root.getElementsByTagName("livro");
+        for (int i = 0; i < livros.getLength(); i++) {
+            Element livro = (Element) livros.item(i);
 
-            Document doc = ManipuladorXML.readXmlFile("./livros.xml");
+            String cod = livro.getAttribute("cod");
 
-            // Read NODE values
-            XPathExpression e1 = ManipuladorXML.getXPathExpression("//livro[@cod='L01']/titulo");
-            String titulo = (String) e1.evaluate(doc, XPathConstants.STRING);
+            NodeList tituloNodes = livro.getElementsByTagName("titulo");
+            String titulo = tituloNodes.getLength() > 0 ? tituloNodes.item(0).getTextContent() : "Título não encontrado";
 
-            XPathExpression e2 = ManipuladorXML.getXPathExpression("//livro[@cod='L01']/autor");
-            String autor = ((String) e2.evaluate(doc, XPathConstants.STRING));
+            NodeList autorNodes = livro.getElementsByTagName("autor");
+            String autor = autorNodes.getLength() > 0 ? autorNodes.item(0).getTextContent() : "Autor não encontrado";
 
-            XPathExpression e3 = ManipuladorXML.getXPathExpression("//livro[@cod='L01']/qtd_exemplar");
-            String qtd_exemplar = ((String) e3.evaluate(doc, XPathConstants.STRING));
+            NodeList qtdExemplarNodes = livro.getElementsByTagName("qtd_exemplar");
+            int qtdExemplar = qtdExemplarNodes.getLength() > 0 ? Integer.parseInt(qtdExemplarNodes.item(0).getTextContent()) : 0;
 
-            XPathExpression e4 = ManipuladorXML.getXPathExpression("//livro[@cod='L01']/dt_incluir");
-            String dt_incluir = ((String) e4.evaluate(doc, XPathConstants.STRING));
+            NodeList dtIncluirNodes = livro.getElementsByTagName("dt_incluir");
+            Date dtIncluir = Date.valueOf(dtIncluirNodes.getLength() > 0 ? dtIncluirNodes.item(0).getTextContent() : null);
 
-            XPathExpression e5 = ManipuladorXML.getXPathExpression("//livro[@cod='L01']/dt_baixa");
-            String dt_baixa = ((String) e5.evaluate(doc, XPathConstants.STRING));
+            NodeList dtBaixaNodes = livro.getElementsByTagName("dt_baixa");
+            Date dtBaixa = Date.valueOf(dtBaixaNodes.getLength() > 0 ? dtBaixaNodes.item(0).getTextContent() : null);
 
-            System.out.println("Nome: " + titulo);
-            System.out.println("Sobrenome: " + autor);
-            System.out.println("Quantidade: " + qtd_exemplar);
-            System.out.println("Datam inclusão: " + dt_incluir);
-            System.out.println("Data Baixa: " + dt_baixa);
+            Livro objLivro = new Livro();
+
+            objLivro.setTitulo(titulo);
+            objLivro.setAutor(autor);
+            objLivro.setQtdExemplar(qtdExemplar);
+            objLivro.setDtInclusao(dtIncluir);
+            objLivro.setDtBaixa(dtBaixa);
             
-        } catch (XPathExpressionException ex) {
-            System.out.println(ex);
+           LivroImpl livroImpl = new LivroImpl();
+           livroImpl.insereLivro(objLivro);
         }
 
     }
