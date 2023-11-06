@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Locacoes>
+    <Locacao>
+        <Id>36</Id>
+        <IdUsuario>17</IdUsuario>
+        <DtPrazoDevolucao>05/11/23</DtPrazoDevolucao>
+        <DtLocacao>05/11/23</DtLocacao>
+        <DtDevolucao>05/11/23</DtDevolucao>
+        <Livros>
+            <Livro>
+                <Id>42</Id>
+                <IdLocacao>36</IdLocacao>
+                <IdLivro>69</IdLivro>
+            </Livro>
+            <Livro>
+                <Id>43</Id>
+                <IdLocacao>36</IdLocacao>
+                <IdLivro>66</IdLivro>
+            </Livro>
+        </Livros>
+    </Locacao>
+</Locacoes>

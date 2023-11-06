@@ -33,6 +33,7 @@ public class LocacaoImpl implements LocacaoDAO {
     private PreparedStatement pstmtInsereLocacaoLivro;
     private PreparedStatement pstmtDeletaLocacaoLivro;
     private PreparedStatement pstmtDevolveLocacaoLivro;
+    private PreparedStatement pstmtListaLocacaoLivro;
 
     public LocacaoImpl() throws ClassNotFoundException, SQLException {
         con = new DataBase().getConnection();
@@ -44,6 +45,7 @@ public class LocacaoImpl implements LocacaoDAO {
         pstmtInsereLocacao = con.prepareStatement("insert into locacao values(default, ?,  ?,  ?, null)", PreparedStatement.RETURN_GENERATED_KEYS);
         pstmtDeletaLocacao = con.prepareStatement("delete from locacao where id = ?");
 
+        pstmtListaLocacaoLivro = con.prepareStatement("select * from locacao_livro where id_locacao=?");
         pstmtInsereLocacaoLivro = con.prepareStatement("insert into locacao_livro values(default, ?,  ?)");
         pstmtDeletaLocacaoLivro = con.prepareStatement("delete from locacao_livro where id_locacao = ?");
         pstmtDevolveLocacaoLivro = con.prepareStatement("UPDATE locacao SET dt_devolucao=? WHERE id=?");
@@ -174,5 +176,48 @@ public class LocacaoImpl implements LocacaoDAO {
             JOptionPane.showMessageDialog(null, "Erro ao cadastrar locação!", "Erro!", ERROR);
             Logger.getLogger(LocacaoImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    @Override
+    public ArrayList<Locacao> getLocacaoesLivros() {
+        ArrayList<Locacao> locacoes = new ArrayList<Locacao>();
+        try {
+            ResultSet resultSet = pstmtListaLocacao.executeQuery();
+            while (resultSet.next()) {
+                System.out.println("select usuarios filtro");
+                Locacao locacao = new Locacao();
+                var id = resultSet.getInt(1);
+                locacao.setId(id);
+                locacao.setIdUsuario(resultSet.getInt(2));
+                locacao.setDtPrazoDevolucao((Date) resultSet.getObject(3));
+                locacao.setDtLocacao((Date) resultSet.getObject(4));
+                locacao.setDtDevolucao((Date) resultSet.getObject(5));
+
+                ArrayList<LocacaoLivro> livros = new ArrayList<LocacaoLivro>();
+                pstmtListaLocacaoLivro.setInt(1, id);
+                ResultSet resultSetLivros = pstmtListaLocacaoLivro.executeQuery();
+
+                while (resultSetLivros.next()) {
+                    LocacaoLivro locacaoLivro = new LocacaoLivro();
+                    locacaoLivro.setId(resultSetLivros.getInt(1));
+                    locacaoLivro.setIdLocacao(resultSetLivros.getInt(2));
+                    locacaoLivro.setIdLivro(resultSetLivros.getInt(3));
+
+                    livros.add(locacaoLivro);
+                }
+
+                locacao.setLivros(livros);
+                locacoes.add(locacao);
+
+            }
+
+        } catch (SQLException ex) {
+            {
+                Logger.getLogger(UsuarioImpl.class.getName()).log(Level.SEVERE, null, ex);
+                return locacoes;
+            }
+
+        }
+        return locacoes;
     }
 }

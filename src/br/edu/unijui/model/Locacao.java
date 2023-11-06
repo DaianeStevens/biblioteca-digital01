@@ -1,6 +1,7 @@
 package br.edu.unijui.model;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 /**
  *
@@ -13,6 +14,15 @@ public class Locacao {
     private Date DtPrazoDevolucao;
     private Date DtLocacao;
     private Date DtDevolucao;
+    private ArrayList<LocacaoLivro> livros;
+
+    public ArrayList<LocacaoLivro> getLivros() {
+        return livros;
+    }
+
+    public void setLivros(ArrayList<LocacaoLivro> livros) {
+        this.livros = livros;
+    }
 
     public int getId() {
         return Id;

@@ -16,4 +16,5 @@ public interface LocacaoDAO {
 
     void deletaLocacao(Integer id);
     void devolveLocacao(Integer id);
+    ArrayList<Locacao> getLocacaoesLivros();
 }
