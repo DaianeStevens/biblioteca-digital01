@@ -1,6 +1,7 @@
 package br.edu.unijui.model.dao;
 
 import br.edu.unijui.dataBase.DataBase;
+import br.edu.unijui.log.Log;
 import br.edu.unijui.model.Usuario;
 import static java.awt.image.ImageObserver.ERROR;
 import java.sql.Connection;
@@ -18,11 +19,13 @@ import javax.swing.JOptionPane;
  */
 public class UsuarioImpl implements UsuarioDAO {
 
+    private Log log;
     private final Connection con;
     private PreparedStatement pstmtListaUsuario;
     private PreparedStatement pstmtInsereUsuario;
 
     public UsuarioImpl() throws ClassNotFoundException, SQLException {
+        log = new Log();
         con = new DataBase().getConnection();
         inicializarPreparedStatements();
     }
@@ -57,10 +60,11 @@ public class UsuarioImpl implements UsuarioDAO {
                 usuarios.add(usuario);
 
             }
+            log.GravaLog("INFO", "Consulta de usuários.");
 
         } catch (SQLException ex) {
             {
-                Logger.getLogger(UsuarioImpl.class.getName()).log(Level.SEVERE, null, ex);
+                log.GravaLog("SEVERE", "Erro ao consultar usuários.");
                 return usuarios;
             }
 
@@ -69,12 +73,12 @@ public class UsuarioImpl implements UsuarioDAO {
 
     }
 
-     public void insereUsuario(Usuario usuario) {
+    public void insereUsuario(Usuario usuario) {
         try {
 
             pstmtInsereUsuario.setString(1, usuario.getNome());
             pstmtInsereUsuario.setString(2, usuario.getSenha());
-            pstmtInsereUsuario.setString(3,usuario.getTelefone());
+            pstmtInsereUsuario.setString(3, usuario.getTelefone());
             pstmtInsereUsuario.setString(4, usuario.getEndereco());
             pstmtInsereUsuario.setString(5, usuario.getBairro());
             pstmtInsereUsuario.setString(6, usuario.getCidade());
@@ -82,10 +86,10 @@ public class UsuarioImpl implements UsuarioDAO {
             pstmtInsereUsuario.setString(8, usuario.getCpf());
 
             pstmtInsereUsuario.execute();
-            JOptionPane.showMessageDialog(null, "Usuario cadastrado com sucesso!");
+            log.GravaLog("INFO", "Inseriu um usuário.");
 
         } catch (SQLException ex) {
-            Logger.getLogger(LivroImpl.class.getName()).log(Level.SEVERE, null, ex);
+            log.GravaLog("SEVERE", "Inseriu um usuário.");
         }
 
     }

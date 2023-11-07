@@ -1,6 +1,7 @@
 package br.edu.unijui.model.dao;
 
 import br.edu.unijui.dataBase.DataBase;
+import br.edu.unijui.log.Log;
 import br.edu.unijui.model.Livro;
 import br.edu.unijui.model.Locacao;
 import br.edu.unijui.model.LocacaoLivro;
@@ -25,6 +26,7 @@ import javax.swing.JOptionPane;
  */
 public class LocacaoImpl implements LocacaoDAO {
 
+    private Log log;
     private final Connection con;
     private PreparedStatement pstmtListaLocacao;
     private PreparedStatement pstmtInsereLocacao;
@@ -37,6 +39,7 @@ public class LocacaoImpl implements LocacaoDAO {
 
     public LocacaoImpl() throws ClassNotFoundException, SQLException {
         con = new DataBase().getConnection();
+        log = new Log();
         inicializarPreparedStatements();
     }
 
@@ -68,10 +71,10 @@ public class LocacaoImpl implements LocacaoDAO {
                 locacoes.add(locacao);
 
             }
-
+            log.GravaLog("INFO", "Consulta de locações.");
         } catch (SQLException ex) {
             {
-                Logger.getLogger(UsuarioImpl.class.getName()).log(Level.SEVERE, null, ex);
+                log.GravaLog("SEVERE", "Erro ao consultar locações.");
                 return locacoes;
             }
 
@@ -103,35 +106,27 @@ public class LocacaoImpl implements LocacaoDAO {
                     }
                 }
                 con.commit();
-
+                log.GravaLog("INFO", "Inseriu uma locação.");
             } catch (Exception ex) {
+                log.GravaLog("SEVERE", "Erro ao inserir um usuário.");
                 try {
                     con.rollback();
-
-                    Logger.getLogger(LocacaoImpl.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (SQLException ex1) {
-                    Logger.getLogger(LocacaoImpl.class.getName()).log(Level.SEVERE, null, ex1);
+                    log.GravaLog("SEVERE", "Erro SQLException.");
                 }
             }
             con.setAutoCommit(true);
             JOptionPane.showMessageDialog(null, "Locação cadastrada com sucesso!");
         } catch (SQLException ex) {
+            log.GravaLog("SEVERE", "Erro SQLException.");
             JOptionPane.showMessageDialog(null, "Erro ao cadastrar locação!", "Erro!", ERROR);
-            Logger.getLogger(LocacaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+
         }
 
     }
 
     @Override
     public void deletaLocacao(Integer id) {
-//        try {
-//            pstmtDeletaLocacao.setInt(1, id);
-//            boolean teste = pstmtDeletaLocacao.execute();
-//            JOptionPane.showMessageDialog(null, "Locação excluída com sucesso!", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
-//        } catch (SQLException ex) {
-//            JOptionPane.showMessageDialog(null, "Erro ao excluir locação!", "Erro!", JOptionPane.ERROR_MESSAGE);
-//            Logger.getLogger(LocacaoImpl.class.getName()).log(Level.SEVERE, null, ex);
-//        }
 
         try {
             con.setAutoCommit(false);
@@ -143,21 +138,20 @@ public class LocacaoImpl implements LocacaoDAO {
                 pstmtDeletaLocacao.execute();
 
                 con.commit();
-
+                log.GravaLog("INFO", "Deletou uma locação.");
             } catch (SQLException ex) {
                 try {
                     con.rollback();
 
-                    Logger.getLogger(LocacaoImpl.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (SQLException ex1) {
-                    Logger.getLogger(LocacaoImpl.class.getName()).log(Level.SEVERE, null, ex1);
+                    log.GravaLog("SEVERE", "Erro SQLException.");
                 }
             }
             con.setAutoCommit(true);
             JOptionPane.showMessageDialog(null, "Locação cadastrada com sucesso!");
         } catch (SQLException ex) {
+            log.GravaLog("SEVERE", "Erro SQLException.");
             JOptionPane.showMessageDialog(null, "Erro ao cadastrar locação!", "Erro!", ERROR);
-            Logger.getLogger(LocacaoImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -171,10 +165,12 @@ public class LocacaoImpl implements LocacaoDAO {
             pstmtDevolveLocacaoLivro.setInt(2, id);
             pstmtDevolveLocacaoLivro.execute();
 
+            log.GravaLog("INFO", "Registrou uma devolução.");
+
             JOptionPane.showMessageDialog(null, "Locação devolvida com sucesso!");
         } catch (SQLException ex) {
+            log.GravaLog("SEVERE", "Erro SQLException.");
             JOptionPane.showMessageDialog(null, "Erro ao cadastrar locação!", "Erro!", ERROR);
-            Logger.getLogger(LocacaoImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -211,11 +207,12 @@ public class LocacaoImpl implements LocacaoDAO {
 
             }
 
+            log.GravaLog("INFO", "Consulta de locações.");
+
         } catch (SQLException ex) {
-            {
-                Logger.getLogger(UsuarioImpl.class.getName()).log(Level.SEVERE, null, ex);
-                return locacoes;
-            }
+
+            log.GravaLog("SEVERE", "Erro SQLException.");
+            return locacoes;
 
         }
         return locacoes;

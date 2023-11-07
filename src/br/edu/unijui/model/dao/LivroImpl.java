@@ -2,16 +2,24 @@ package br.edu.unijui.model.dao;
 
 import br.edu.unijui.dataBase.DataBase;
 import br.edu.unijui.model.Livro;
+import br.edu.unijui.log.Log;
 import static java.awt.image.ImageObserver.ERROR;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import java.util.Properties;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.FileHandler;
+import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
+import java.util.logging.SimpleFormatter;
+import java.util.logging.XMLFormatter;
 
 /**
  *
@@ -19,6 +27,7 @@ import javax.swing.JOptionPane;
  */
 public class LivroImpl implements LivroDAO {
 
+    private Log log;
     private final Connection con;
     private PreparedStatement pstmtListaLivro;
     private PreparedStatement pstmtListaLivroFiltro;
@@ -26,6 +35,7 @@ public class LivroImpl implements LivroDAO {
 
     public LivroImpl() throws ClassNotFoundException, SQLException {
         con = new DataBase().getConnection();
+        log = new Log();
         inicializarPreparedStatements();
     }
 
@@ -45,6 +55,7 @@ public class LivroImpl implements LivroDAO {
         try {
             pstmtListaLivroFiltro.setString(1, '%' + filtro.toLowerCase() + '%');
             ResultSet resultSet = pstmtListaLivroFiltro.executeQuery();
+
             while (resultSet.next()) {
                 System.out.println("select livros filtro " + pstmtListaLivro.toString());
                 Livro livro = new Livro();
@@ -55,19 +66,17 @@ public class LivroImpl implements LivroDAO {
                 livro.setDtInclusao((Date) resultSet.getObject(5));
                 livro.setDtBaixa((Date) resultSet.getObject(6));
                 livros.add(livro);
-
             }
+            log.GravaLog("INFO", "Consulta de livros.");
 
         } catch (SQLException ex) {
-            {
-                Logger.getLogger(UsuarioImpl.class.getName()).log(Level.SEVERE, null, ex);
-                return livros;
-            }
+            log.GravaLog("SEVERE", "Erro ao consultar livros.");
+            return livros;
 
         }
         return livros;
     }
-    
+
     public void insereLivro(Livro livro) {
         try {
 
@@ -78,11 +87,10 @@ public class LivroImpl implements LivroDAO {
             pstmtInsereLivro.setDate(5, (Date) livro.getDtBaixa());
 
             pstmtInsereLivro.execute();
-            //JOptionPane.showMessageDialog(null, "Livro cadastrado com sucesso!");
+            log.GravaLog("INFO", "Inseriu um livro.");
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao cadastrar livro!", "Erro!", ERROR);
-            Logger.getLogger(LivroImpl.class.getName()).log(Level.SEVERE, null, ex);
+            log.GravaLog("INFO", "Erro ao inserir um livro.");
         }
 
     }
