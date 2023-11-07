@@ -4,11 +4,13 @@
  */
 package br.edu.unijui.xml.docs;
 
+import br.edu.unijui.log.Log;
 import br.edu.unijui.model.dao.LocacaoImpl;
 import br.edu.unijui.xml.ManipuladorXML;
 import java.sql.SQLException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import javax.swing.JOptionPane;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -18,7 +20,13 @@ import org.w3c.dom.Element;
  */
 public class ExportaLocacoes {
 
-    public static void main(String[] args) throws ClassNotFoundException, SQLException {
+    private Log log;
+
+    public ExportaLocacoes() {
+        log = new Log();
+    }
+
+    public void exportar() throws ClassNotFoundException, SQLException {
 
         LocacaoImpl locacaoImpl = new LocacaoImpl();
 
@@ -82,5 +90,7 @@ public class ExportaLocacoes {
         }
 
         ManipuladorXML.writeXmlFile(doc, "./locacoes.xml");
+        log.GravaLog("INFO", "Exportou locações.");
+        JOptionPane.showMessageDialog(null, "Locações exportadas com sucesso!");
     }
 }

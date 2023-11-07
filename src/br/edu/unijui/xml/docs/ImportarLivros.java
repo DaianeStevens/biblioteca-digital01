@@ -4,6 +4,8 @@
  */
 package br.edu.unijui.xml.docs;
 
+import br.edu.unijui.dataBase.DataBase;
+import br.edu.unijui.log.Log;
 import br.edu.unijui.model.Livro;
 import br.edu.unijui.model.dao.LivroImpl;
 import br.edu.unijui.xml.ManipuladorXML;
@@ -11,6 +13,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import javax.swing.JOptionPane;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
@@ -24,12 +27,18 @@ import org.w3c.dom.NodeList;
  */
 public class ImportarLivros {
 
-    public static void main(String[] args) throws ClassNotFoundException, SQLException {
+    private Log log;
 
-        Document doc = ManipuladorXML.readXmlFile("./livros.xml");
+    public ImportarLivros() {
+        log = new Log();
+    }
+
+    public void importar(String caminho) throws ClassNotFoundException, SQLException {
+
+        Document doc = ManipuladorXML.readXmlFile("C:/Users/chayk/OneDrive/Documentos/Facul/8º sem/Linguagem de Programação III/Trabalho 01/biblioteca-digital01/livros.xml");
         Element root = doc.getDocumentElement();
         NodeList livros = root.getElementsByTagName("livro");
-        var teste = livros.getLength();
+
         for (int i = 0; i < livros.getLength(); i++) {
             Element livro = (Element) livros.item(i);
 
@@ -54,10 +63,10 @@ public class ImportarLivros {
             Date dtBaixa = null;
             int qtdExemplar = 0;
 
-            if(qtdExemplarStr!=""){
-                qtdExemplar= Integer.parseInt(qtdExemplarStr);
+            if (qtdExemplarStr != "") {
+                qtdExemplar = Integer.parseInt(qtdExemplarStr);
             }
-            
+
             if (dtIncluirStr != "") {
                 dtIncluir = Date.valueOf(dtIncluirStr);
             }
@@ -77,6 +86,8 @@ public class ImportarLivros {
             LivroImpl livroImpl = new LivroImpl();
             livroImpl.insereLivro(objLivro);
         }
+        log.GravaLog("INFO", "Importou livros.");
+        JOptionPane.showMessageDialog(null, "Livros importados com sucesso!");
 
     }
 }

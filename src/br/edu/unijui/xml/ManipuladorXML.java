@@ -93,14 +93,14 @@ public class ManipuladorXML {
     // Montar um objeto Document a partir de um arquivo texto XML
     public static Document readXmlFile(String filename) {
         try {
-
+            File file = new File(filename);
             DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
             domFactory.setNamespaceAware(true);
             DocumentBuilder builder = domFactory.newDocumentBuilder();
-            return builder.parse(filename);
-
+            return builder.parse(file.toURI().toURL().toString());
         } catch (IOException | SAXException | ParserConfigurationException ex) {
-            System.out.println(ex);
+            System.out.println("Erro ao ler o arquivo XML: " + filename);
+            ex.printStackTrace();
             return null;
         }
     }

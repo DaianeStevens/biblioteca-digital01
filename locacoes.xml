@@ -1,17 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Locacoes>
     <Locacao>
+        <Id>37</Id>
+        <IdUsuario>17</IdUsuario>
+        <DtPrazoDevolucao>06/11/23</DtPrazoDevolucao>
+        <DtLocacao>06/11/23</DtLocacao>
+        <DtDevolucao>06/11/23</DtDevolucao>
+        <Livros/>
+    </Locacao>
+    <Locacao>
+        <Id>38</Id>
+        <IdUsuario>25</IdUsuario>
+        <DtPrazoDevolucao>06/11/23</DtPrazoDevolucao>
+        <DtLocacao>06/11/23</DtLocacao>
+        <DtDevolucao>06/11/23</DtDevolucao>
+        <Livros>
+            <Livro>
+                <Id>47</Id>
+                <IdLocacao>38</IdLocacao>
+                <IdLivro>67</IdLivro>
+            </Livro>
+        </Livros>
+    </Locacao>
+    <Locacao>
         <Id>36</Id>
         <IdUsuario>17</IdUsuario>
         <DtPrazoDevolucao>05/11/23</DtPrazoDevolucao>
         <DtLocacao>05/11/23</DtLocacao>
         <DtDevolucao>05/11/23</DtDevolucao>
         <Livros>
-            <Livro>
-                <Id>42</Id>
-                <IdLocacao>36</IdLocacao>
-                <IdLivro>69</IdLivro>
-            </Livro>
             <Livro>
                 <Id>43</Id>
                 <IdLocacao>36</IdLocacao>
