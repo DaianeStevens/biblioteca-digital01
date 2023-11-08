@@ -57,7 +57,6 @@ public class LivroImpl implements LivroDAO {
             ResultSet resultSet = pstmtListaLivroFiltro.executeQuery();
 
             while (resultSet.next()) {
-                System.out.println("select livros filtro " + pstmtListaLivro.toString());
                 Livro livro = new Livro();
                 livro.setId(resultSet.getInt(1));
                 livro.setTitulo((String) resultSet.getObject(2));

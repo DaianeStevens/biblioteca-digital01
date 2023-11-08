@@ -60,7 +60,6 @@ public class LocacaoImpl implements LocacaoDAO {
         try {
             ResultSet resultSet = pstmtListaLocacao.executeQuery();
             while (resultSet.next()) {
-                System.out.println("select usuarios filtro");
                 Locacao locacao = new Locacao();
                 locacao.setId(resultSet.getInt(1));
                 locacao.setIdUsuario(resultSet.getInt(2));
@@ -180,7 +179,6 @@ public class LocacaoImpl implements LocacaoDAO {
         try {
             ResultSet resultSet = pstmtListaLocacao.executeQuery();
             while (resultSet.next()) {
-                System.out.println("select usuarios filtro");
                 Locacao locacao = new Locacao();
                 var id = resultSet.getInt(1);
                 locacao.setId(id);

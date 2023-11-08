@@ -45,7 +45,6 @@ public class UsuarioImpl implements UsuarioDAO {
             pstmtListaUsuario.setString(1, '%' + filtro.toLowerCase() + '%');
             ResultSet resultSet = pstmtListaUsuario.executeQuery();
             while (resultSet.next()) {
-                System.out.println("select usuarios filtro");
                 Usuario usuario = new Usuario();
                 usuario.setId(resultSet.getInt(1));
                 usuario.setNome((String) resultSet.getObject(2));

@@ -84,7 +84,7 @@ public class Log {
 
         conf.setProperty("arquivo", "Logs.log");
         conf.setProperty("add", "true");
-        conf.setProperty("suprimir-saida-console", "false");
+        conf.setProperty("suprimir-saida-console", "true");
         conf.setProperty("nivel", "INFO");
         conf.setProperty("formato-saida", "XML");
 
