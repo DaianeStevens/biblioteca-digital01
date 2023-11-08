@@ -347,24 +347,25 @@ public class LivroForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-
-        JFileChooser chooser = new JFileChooser();
-        // optionally set chooser options ...
-        if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-            try {
-                File f = chooser.getSelectedFile();
-                var caminho = f.getPath().toString();
-                
-                ImportarLivros importar = new ImportarLivros();
-                importar.importar(caminho);
-                // read  and/or display the file somehow. ....
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(LivroForm.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SQLException ex) {
-                Logger.getLogger(LivroForm.class.getName()).log(Level.SEVERE, null, ex);
+        try {
+            LivroImpl livroImpl = new LivroImpl();
+            JFileChooser chooser = new JFileChooser();
+            // optionally set chooser options ...
+            if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+                    File f = chooser.getSelectedFile();
+                    var caminho = f.getPath().toString();
+                    
+                    ImportarLivros importar = new ImportarLivros();
+                    importar.importar(caminho);
+                    PopulateTableLivros(livroImpl.getLivrosFiltro(null));
+                    // read  and/or display the file somehow. ....
+            } else {
+                // user changed their mind
             }
-        } else {
-            // user changed their mind
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(LivroForm.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(LivroForm.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }//GEN-LAST:event_jButton1MouseClicked

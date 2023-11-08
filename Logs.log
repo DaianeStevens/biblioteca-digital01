@@ -2,9 +2,9 @@
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 <record>
-  <date>2023-11-08T00:26:53.066126200Z</date>
-  <millis>1699403213066</millis>
-  <nanos>126200</nanos>
+  <date>2023-11-08T22:21:46.069594600Z</date>
+  <millis>1699482106069</millis>
+  <nanos>594600</nanos>
   <sequence>0</sequence>
   <logger>br.edu.unijui.model.dao</logger>
   <level>INFO</level>
@@ -14,63 +14,75 @@
   <message>Consulta de livros.</message>
 </record>
 <record>
-  <date>2023-11-08T00:26:59.730557400Z</date>
-  <millis>1699403219730</millis>
-  <nanos>557400</nanos>
+  <date>2023-11-08T22:21:49.797860900Z</date>
+  <millis>1699482109797</millis>
+  <nanos>860900</nanos>
   <sequence>1</sequence>
   <logger>br.edu.unijui.model.dao</logger>
   <level>INFO</level>
   <class>br.edu.unijui.log.Log</class>
   <method>GravaLog</method>
   <thread>25</thread>
-  <message>Consulta de locações.</message>
+  <message>Inseriu um livro.</message>
 </record>
 <record>
-  <date>2023-11-08T00:26:59.741140600Z</date>
-  <millis>1699403219741</millis>
-  <nanos>140600</nanos>
+  <date>2023-11-08T22:21:49.828920500Z</date>
+  <millis>1699482109828</millis>
+  <nanos>920500</nanos>
   <sequence>2</sequence>
   <logger>br.edu.unijui.model.dao</logger>
   <level>INFO</level>
   <class>br.edu.unijui.log.Log</class>
   <method>GravaLog</method>
   <thread>25</thread>
-  <message>Consulta de livros.</message>
+  <message>Inseriu um livro.</message>
 </record>
 <record>
-  <date>2023-11-08T00:26:59.765996300Z</date>
-  <millis>1699403219765</millis>
-  <nanos>996300</nanos>
+  <date>2023-11-08T22:21:49.851765400Z</date>
+  <millis>1699482109851</millis>
+  <nanos>765400</nanos>
   <sequence>3</sequence>
   <logger>br.edu.unijui.model.dao</logger>
   <level>INFO</level>
   <class>br.edu.unijui.log.Log</class>
   <method>GravaLog</method>
   <thread>25</thread>
-  <message>Consulta de usuários.</message>
+  <message>Inseriu um livro.</message>
 </record>
 <record>
-  <date>2023-11-08T00:27:00.802916700Z</date>
-  <millis>1699403220802</millis>
-  <nanos>916700</nanos>
+  <date>2023-11-08T22:21:49.884531300Z</date>
+  <millis>1699482109884</millis>
+  <nanos>531300</nanos>
   <sequence>4</sequence>
   <logger>br.edu.unijui.model.dao</logger>
   <level>INFO</level>
   <class>br.edu.unijui.log.Log</class>
   <method>GravaLog</method>
   <thread>25</thread>
-  <message>Consulta de locações.</message>
+  <message>Inseriu um livro.</message>
 </record>
 <record>
-  <date>2023-11-08T00:27:00.851339300Z</date>
-  <millis>1699403220851</millis>
-  <nanos>339300</nanos>
+  <date>2023-11-08T22:21:49.884531300Z</date>
+  <millis>1699482109884</millis>
+  <nanos>531300</nanos>
   <sequence>5</sequence>
   <logger>br.edu.unijui.model.dao</logger>
   <level>INFO</level>
   <class>br.edu.unijui.log.Log</class>
   <method>GravaLog</method>
   <thread>25</thread>
-  <message>Exportou locações.</message>
+  <message>Importou livros.</message>
+</record>
+<record>
+  <date>2023-11-08T22:21:51.329357100Z</date>
+  <millis>1699482111329</millis>
+  <nanos>357100</nanos>
+  <sequence>6</sequence>
+  <logger>br.edu.unijui.model.dao</logger>
+  <level>INFO</level>
+  <class>br.edu.unijui.log.Log</class>
+  <method>GravaLog</method>
+  <thread>25</thread>
+  <message>Consulta de livros.</message>
 </record>
 </log>
