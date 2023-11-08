@@ -35,7 +35,7 @@ public class ImportarLivros {
 
     public void importar(String caminho) throws ClassNotFoundException, SQLException {
 
-        Document doc = ManipuladorXML.readXmlFile("C:/Users/chayk/OneDrive/Documentos/Facul/8º sem/Linguagem de Programação III/Trabalho 01/biblioteca-digital01/livros.xml");
+        Document doc = ManipuladorXML.readXmlFile(caminho);
         Element root = doc.getDocumentElement();
         NodeList livros = root.getElementsByTagName("livro");
 

@@ -362,9 +362,7 @@ public class LivroForm extends javax.swing.JFrame {
             } else {
                 // user changed their mind
             }
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(LivroForm.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
+        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(LivroForm.class.getName()).log(Level.SEVERE, null, ex);
         }
 
